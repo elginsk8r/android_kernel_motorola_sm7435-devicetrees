@@ -232,7 +232,7 @@ endif
 
 ifeq ($(CONFIG_GENEVN_DTB),y)
 PARROT_BASE_DTB += parrot-moto-base.dtb
-PARROT_BOARDS += parrot-genevn-evb0-overlay.dtbo
+PARROT_BOARDS += parrot-genevn-evb-overlay.dtbo
 endif
 
 ifeq ($(CONFIG_PAROS_DTB),y)
