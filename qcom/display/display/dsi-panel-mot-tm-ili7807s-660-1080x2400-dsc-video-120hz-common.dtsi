@@ -1,6 +1,6 @@
 &mdss_mdp {
-	mot_csot_nt36672c_660_1080x2400_dsc_vid_120hz: qcom,mdss_dsi_mot_csot_nt36672c_660_1080x2400_dsc_vid_120hz {
-		qcom,mdss-dsi-panel-name = "mipi_moto_vid_csot_1080p_dsc_660_120hz";
+	mot_tm_ili7807s_660_1080x2400_dsc_vid_120hz: qcom,mdss_dsi_mot_tm_ili7807s_660_1080x2400_dsc_vid_120hz {
+		qcom,mdss-dsi-panel-name = "mipi_moto_vid_tm_1080p_dsc_660_120hz";
 		qcom,mdss-dsi-panel-type = "dsi_video_mode";
 		qcom,mdss-dsi-panel-physical-type = "lcd";
 		qcom,mdss-dsi-virtual-channel-id = <0>;
@@ -38,12 +38,12 @@
 				qcom,mdss-dsi-panel-framerate = <120>;
 				qcom,mdss-dsi-panel-width = <1080>;
 				qcom,mdss-dsi-panel-height = <2400>;
-				qcom,mdss-dsi-h-front-porch = <156>;
-				qcom,mdss-dsi-h-back-porch = <80>;
+				qcom,mdss-dsi-h-front-porch = <19>;
+				qcom,mdss-dsi-h-back-porch = <22>;
 				qcom,mdss-dsi-h-pulse-width = <4>;
 				qcom,mdss-dsi-h-sync-skew = <0>;
-				qcom,mdss-dsi-v-back-porch = <18>;
-				qcom,mdss-dsi-v-front-porch = <54>;
+				qcom,mdss-dsi-v-back-porch = <46>;
+				qcom,mdss-dsi-v-front-porch = <46>;
 				qcom,mdss-dsi-v-pulse-width = <2>;
 				qcom,mdss-dsi-h-left-border = <0>;
 				qcom,mdss-dsi-h-right-border = <0>;
@@ -51,51 +51,40 @@
 				qcom,mdss-dsi-v-bottom-border = <0>;
 
 				qcom,mdss-dsi-on-command = [
- 					39 01 00 00 00 00 02 FF 10
- 					39 01 00 00 00 00 02 FB 01
- 					39 01 00 00 00 00 02 B0 00
+ 					39 01 00 00 00 00 04 FF 78 07 06
+ 					15 01 00 00 00 00 02 3E E2
+ 					15 01 00 00 00 00 02 12 BD
+ 					15 01 00 00 00 00 02 08 20
 
- 					39 01 00 00 00 00 02 FF E0
- 					39 01 00 00 00 00 02 FB 01
- 					39 01 00 00 00 00 02 35 82
+ 					39 01 00 00 00 00 04 FF 78 07 03
+ 					15 01 00 00 00 00 02 83 C8
+ 					15 01 00 00 00 00 02 84 04
 
- 					39 01 00 00 00 00 02 FF F0
- 					39 01 00 00 00 00 02 FB 01
- 					39 01 00 00 00 00 02 1C 01
- 					39 01 00 00 00 00 02 33 01
- 					39 01 00 00 00 00 02 5A 00
+ 					39 01 00 00 00 00 04 FF 78 07 04
+ 					15 01 00 00 00 00 02 BD 01
 
- 					39 01 00 00 00 00 02 FF D0
- 					39 01 00 00 00 00 02 FB 01
- 					39 01 00 00 00 00 02 53 22
+ 					39 01 00 00 00 00 04 FF 78 07 05
+ 					15 01 00 00 00 00 02 B5 50
+ 					15 01 00 00 00 00 02 B7 70
 
- 					39 01 00 00 00 00 02 54 02
- 					39 01 00 00 00 00 02 FF C0
- 					39 01 00 00 00 00 02 FB 01
- 					39 01 00 00 00 00 02 9C 11
- 					39 01 00 00 00 00 02 9D 11
+ 					39 01 00 00 00 00 04 FF 78 07 08
+ 					39 01 00 00 00 00 03 FD 00 9F
+ 					15 01 00 00 00 00 02 E1 E1
+ 					39 01 00 00 00 00 03 FD 00 00
 
- 					39 01 00 00 00 00 02 FF 2B
- 					39 01 00 00 00 00 02 FB 01
- 					39 01 00 00 00 00 02 B7 28
- 					39 01 00 00 00 00 02 B8 03
- 					39 01 00 00 00 00 02 C0 02
+ 					39 01 00 00 00 00 04 FF 78 07 02
+ 					15 01 00 00 00 00 02 1B 00
 
- 					39 01 00 00 00 00 02 FF 10
- 					39 01 00 00 00 00 02 FB 01
- 					39 01 00 00 00 00 03 51 03 0F
- 					39 01 00 00 00 00 02 53 2C
- 					39 01 00 00 00 00 02 55 01
-					39 01 00 00 00 00 03 68 00 01
+ 					39 01 00 00 00 00 04 FF 78 07 07
+ 					15 01 00 00 00 00 02 29 CF
 
- 					39 01 00 00 00 00 02 FF 10
- 					39 01 00 00 00 00 02 FB 01
- 					39 01 00 00 00 00 02 35 00
-
- 					39 01 00 00 00 00 02 FF 10
+ 					39 01 00 00 00 00 04 FF 78 07 00
+ 					39 01 00 00 00 00 03 51 03 FF
+ 					15 01 00 00 00 00 02 53 24
+ 					15 01 00 00 00 00 02 35 00
 
  					05 01 00 00 78 00 02 11 00
- 					05 01 00 00 14 00 02 29 00
+ 					05 01 00 00 30 00 02 29 00
 				];
 
 				qcom,mdss-dsi-off-command = [
@@ -105,7 +94,7 @@
 				qcom,mdss-dsi-off-command-state = "dsi_lp_mode";
 
 				qcom,compression-mode = "dsc";
-				qcom,mdss-dsc-slice-height = <20>;
+				qcom,mdss-dsc-slice-height = <8>;
 				qcom,mdss-dsc-slice-width = <540>;
 				qcom,mdss-dsc-slice-per-pkt = <2>;
 				qcom,mdss-dsc-bit-per-component = <8>;
