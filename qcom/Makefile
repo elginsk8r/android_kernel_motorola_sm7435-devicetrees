@@ -236,6 +236,12 @@ PARROT_BOARDS += parrot-genevn-evb-overlay.dtbo
 PARROT_BOARDS += parrot-genevn-dvt1-overlay.dtbo
 endif
 
+ifeq ($(CONFIG_AVATRN_DTB),y)
+PARROT_BASE_DTB += parrot-moto-base.dtb
+PARROT_BOARDS += parrot-avatrn-evb-overlay.dtbo
+PARROT_BOARDS += parrot-avatrn-dvt1-overlay.dtbo
+endif
+
 ifeq ($(CONFIG_PAROS_DTB),y)
 dtbo-$(CONFIG_ARCH_PARROT) += \
         parrot-paros-evt-overlay.dtbo
