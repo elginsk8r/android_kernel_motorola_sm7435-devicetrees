@@ -51,6 +51,11 @@ dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
                  parrot-audio-moto-portov-evb.dtbo
 endif
 
+ifeq ($(CONFIG_LAMY_DTB),y)
+dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
+                 parrot-audio-moto-lamy-evb.dtbo
+endif
+
 ifeq ($(CONFIG_MUMBA_DTB),y)
 dtbo-$(CONFIG_ARCH_PARROT) += parrot-audio.dtbo \
                  parrot-audio-moto-mumba-evb.dtbo
