@@ -41,6 +41,10 @@ ifeq ($(CONFIG_MONAI_DTB),y)
 dtbo-y += st/parrot-monai-nfc.dtbo
 endif
 
+ifeq ($(CONFIG_LAMY_DTB),y)
+dtbo-y += st/parrot-lamy-nfc.dtbo
+endif
+
 always-y        := $(dtb-y) $(dtbo-y)
 subdir-y        := $(dts-dirs)
 clean-files     := *.dtb *.dtbo
