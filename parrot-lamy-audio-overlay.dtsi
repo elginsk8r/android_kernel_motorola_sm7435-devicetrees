@@ -113,7 +113,7 @@
 		aw-re-max= <30000>;
 		rename-flag = <1>;
 		aw-cali-mode = "none";
-		monitor-mode = "hal_monitor";
+		monitor-mode = "kernel_monitor";
 		status = "okay";
 	};
 	aw882xxacf_rcv: aw882xx_smartpa@35 { /* SPKL */
@@ -125,7 +125,7 @@
 		aw-re-max= <30000>;
 		rename-flag = <1>;
 		aw-cali-mode = "none";
-		monitor-mode = "hal_monitor";
+		monitor-mode = "kernel_monitor";
 		status = "okay";
 	};
 };
