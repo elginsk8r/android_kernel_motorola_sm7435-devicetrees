@@ -82,7 +82,7 @@
 			qcom,supply-name = "vci";
 			qcom,supply-min-voltage = <3000000>;
 			qcom,supply-max-voltage = <3000000>;
-			qcom,supply-enable-load = <10000>;
+			qcom,supply-enable-load = <2000>;
 			qcom,supply-disable-load = <0>;
 			qcom,supply-post-on-sleep = <0>;
 		};
@@ -254,7 +254,7 @@
 		pinctrl-0 = <&sde_dsi1_active &sde_te1_active>;
 		pinctrl-1 = <&sde_dsi1_suspend &sde_te1_suspend>;
 
-		qcom,platform-te-gpio = <&tlmm 87 0>;
+		//qcom,platform-te-gpio = <&tlmm 87 0>;
 		qcom,panel-te-source = <1>;
 
 		qcom,mdp = <&mdss_mdp>;
@@ -346,7 +346,7 @@
 
 		timing@1 {
 			qcom,mdss-dsi-panel-phy-timings = [00 16 06 05 14 1f 06
-				06 06 02 04 00 14 0b];
+				06 06 02 04 00 14 0a];
 			qcom,display-topology = <2 2 1>;
 			qcom,default-topology-index = <0>;
 
@@ -354,7 +354,7 @@
 		};
 
 		timing@2 {
-			qcom,mdss-dsi-panel-phy-timings = [00 1c 08 07 17 22 07
+			qcom,mdss-dsi-panel-phy-timings = [00 1c 08 07 17 16 07
 				07 08 02 04 00 19 0c];
 			qcom,display-topology = <2 2 1>;
 			qcom,default-topology-index = <0>;
@@ -521,20 +521,11 @@
 	qcom,mdss-dsi-panel-status-command-state = "dsi_lp_mode";
 	qcom,mdss-dsi-panel-status-value = <0x1c>;
 	qcom,mdss-dsi-panel-status-read-length = <1>;
-	qcom,esd-check-enabled;
+	//qcom,esd-check-enabled;
 
 	qcom,mdss-dsi-display-timings {
-		timing@0 {
-			qcom,mdss-dsi-panel-phy-timings = [00 13 04 04 13 1e 05
-				05 04 02 04 00 10 0a];
-			qcom,display-topology = <1 1 1>;
-			qcom,default-topology-index = <0>;
-		};
-
-		timing@1 {
-			qcom,mdss-dsi-panel-phy-timings = [00 13 04 04 13 1e 05
-				05 04 02 04 00 10 0a];
-			qcom,display-topology = <1 1 1>;
+		timing@0{
+			qcom,display-topology = <1 0 1>;
 			qcom,default-topology-index = <0>;
 		};
 	};
@@ -903,10 +894,7 @@
 	qcom,dsi-select-clocks = "pll_byte_clk0", "pll_dsi_clk0";
 	qcom,mdss-dsi-display-timings {
 		timing@0 {
-			qcom,mdss-dsi-panel-phy-timings = [01 09 01 01 0e 1b 01
-				01 02 02 04 00 08 06];
-			qcom,display-topology = <1 0 1>,
-						<2 0 1>;
+			qcom,display-topology = <1 0 1>;
 			qcom,default-topology-index = <0>;
 		};
 	};
