@@ -26,7 +26,7 @@
 
 	ddr-regions { };
 
-	mem-offline {
+	mem_offline: mem-offline {
 		compatible = "qcom,mem-offline";
 		offline-sizes = <0x1 0x40000000 0x0 0x40000000>,
 				<0x1 0xc0000000 0x0 0x80000000>,
@@ -42,6 +42,7 @@
 		hsuart0 = &qupv3_se20_4uart;
 		ufshc1 = &ufshc_mem; /* Embedded UFS Slot */
 		mmc1 = &sdhc_2; /* SDC2 SD card slot */
+		spi0 = &qupv3_se19_spi; /* spi 0 for Franklin */
 	};
 
 	sram: sram@17D09400 {
@@ -404,7 +405,7 @@
 		alloc-ranges = <0x0 0x00000000 0x0 0xffffffff>;
 		reusable;
 		alignment = <0x0 0x400000>;
-		size = <0x0 0x1000000>;
+		size = <0x0 0x2000000>;
 	};
 
 	cnss_wlan_mem: cnss_wlan_region {
