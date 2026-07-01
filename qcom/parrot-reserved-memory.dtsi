@@ -93,15 +93,15 @@
 		no-map;
 		reg = <0x0 0x85300000 0x0 0x1900000>;
 	};
-
-	video_mem: video_region@86c00000 {
+	/* enlarge video size form 86c00000 to 9a200000 */
+	video_mem: video_region@9a200000 {
 		no-map;
-		reg = <0x0 0x86c00000 0x0 0x700000>;
+		reg = <0x0 0x9a200000 0x0 0x700000>;
 	};
-
+	/* enlarge adsp size form 87300000 to 86c00000, and size 0x2800000 */
 	adsp_mem: adsp_region@87300000 {
 		no-map;
-		reg = <0x0 0x87300000 0x0 0x2100000>;
+		reg = <0x0 0x86c00000 0x0 0x2800000>;
 	};
 
 	cdsp_mem: cdsp_region@89400000 {
@@ -146,9 +146,15 @@
 
 	trust_ui_vm_mem: trust_ui_vm_region@e0c00000 {
 		compatible = "shared-dma-pool";
-		reg = <0x0 0xe0c00000 0x0 0x4c00000>;
+		reg = <0x0 0xe0c00000 0x0 0x4500000>;
 		reusable;
 		alignment = <0x0 0x400000>;
+	};
+
+	/* Moto kernel protection reserved CMA region (carved out from TUI) */
+	kern_prot_mem: kern_prot_region@e5100000 {
+		no-map;
+		reg = <0x0 0xe5100000 0x0 0x400000>;
 	};
 
 	vm_comm_mem: vm_comm_mem_region {

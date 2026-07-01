@@ -1,0 +1,228 @@
+/*
+ * Copyright (c) 2022, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&qupv3_se9_i2c {
+        status = "disabled";
+};
+
+&qupv3_se9_spi_pins {
+	qupv3_se9_spi_miso_active: qupv3_se9_spi_miso_active {
+		mux {
+			pins = "gpio10";
+			function = "qup1_se3_l0";
+		};
+
+		config {
+			pins = "gpio10";
+			drive-strength = <6>;
+			bias-disable;
+		};
+	};
+
+	qupv3_se9_spi_mosi_active: qupv3_se9_spi_mosi_active {
+		mux {
+			pins = "gpio11";
+			function = "qup1_se3_l1";
+		};
+
+		config {
+			pins = "gpio11";
+			drive-strength = <6>;
+			bias-disable;
+		};
+	};
+
+	qupv3_se9_spi_clk_active: qupv3_se9_spi_clk_active {
+		mux {
+			pins = "gpio12";
+			function = "qup1_se3_l2";
+		};
+
+		config {
+			pins = "gpio12";
+			drive-strength = <6>;
+			bias-disable;
+		};
+	};
+
+	qupv3_se9_spi_cs_active: qupv3_se9_spi_cs_active {
+		mux {
+			pins = "gpio13";
+			function = "qup1_se3_l3";
+		};
+
+		config {
+			pins = "gpio13";
+			drive-strength = <6>;
+			bias-disable;
+		};
+	};
+
+	qupv3_se9_spi_sleep: qupv3_se9_spi_sleep {
+		mux {
+			pins = "gpio10", "gpio11",
+				"gpio12";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio10", "gpio11",
+				"gpio12";
+			drive-strength = <2>;
+			bias-disable;
+		};
+	};
+
+	qupv3_se9_spi_cs_sleep: qupv3_se9_spi_cs_sleep {
+		mux {
+			pins = "gpio13";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio13";
+			drive-strength = <2>;
+			bias-bus-hold;
+		};
+	};
+};
+
+&tlmm{
+	pmx_ts_spi_int_suspend_high {
+		ts_spi_int_suspend_high: ts_spi_int_suspend_high {
+			mux {
+				pins = "gpio65";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio65";
+				drive-strength = <2>;
+				bias-disable;
+			};
+		};
+	};
+
+	pmx_ts_spi_int_active {
+                        ts_spi_int_active: ts_spi_int_active {
+                                mux {
+                                        pins = "gpio65", "gpio131";
+                                        function = "gpio";
+                                };
+
+                                config {
+                                        pins = "gpio65", "gpio131";
+                                        drive-strength = <8>;
+                                        bias-pull-up;
+                                };
+                        };
+                };
+
+	pmx_ts_spi_release {
+		ts_spi_release: ts_spi_release {
+			mux {
+				pins = "gpio65", "gpio131";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio65", "gpio131";
+				drive-strength = <2>;
+				bias-disable;
+			};
+		};
+	};
+
+	touch_reset_mux {
+		touch_reset_active: touch_reset_active {
+			mux {
+				pins = "gpio131";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio131";
+				drive-strength = <8>;
+				bias-disable;
+				output-high;
+			};
+		};
+
+		touch_reset_suspend: touch_reset_suspend {
+			mux {
+				pins = "gpio131";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio131";
+				drive-strength = <2>;
+				bias-pull-down;
+				output-low;
+			};
+		};
+	};
+};
+
+&qupv3_se9_spi {
+	status = "ok";
+	pinctrl-0 = <&qupv3_se9_spi_mosi_active &qupv3_se9_spi_miso_active &qupv3_se9_spi_clk_active &qupv3_se9_spi_cs_active>;
+	pinctrl-1 = <&qupv3_se9_spi_sleep &qupv3_se9_spi_cs_sleep>;
+	ilitek@1 {
+		compatible = "tchip,ilitek";
+		reg = <0x1>;
+		spi-max-frequency = <6000000>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <65 0x2001>;
+		mmi,status = "/chosen","mmi,panel_name","contains","ili7807s";
+		touch,reset-gpio = <&tlmm 131 0x00>;
+		touch,irq-gpio = <&tlmm 65 0x2001>;
+		pinctrl-names = "pmx_ts_int_active","pmx_ts_int_suspend_high";
+		pinctrl-0 = <&ts_spi_int_active>;
+		pinctrl-1 = <&ts_spi_int_suspend_high>;
+		ilitek,check_resolution;
+		ilitek,interpolation-ctrl;
+		mmi,usb-charger-detection;
+		mmi,enable-gestures;
+		mmi,supported_gesture_type = <0x06>;
+		status = "ok";
+	};
+
+	focaltech@2 {
+		compatible = "focaltech,fts";
+		reg = <0x2>;
+		status = "ok";
+		mmi,status = "/chosen","mmi,panel_name","contains","ft8725";
+		spi-max-frequency = <8000000>;
+		focaltech,reset-gpio = <&tlmm 131 0x0>;
+		focaltech,irq-gpio = <&tlmm 65 0x2800>;
+		pinctrl-names = "pmx_ts_active", "pmx_ts_suspend",
+				"pmx_ts_release";
+		pinctrl-0 = <&touch_reset_active>;
+		pinctrl-1 = <&touch_reset_suspend>;
+		pinctrl-2 = <&ts_spi_release>;
+		focaltech,max-touch-number = <10>;
+		focaltech,display-coords =  <0 0 4316 9548>;
+		focaltech,high-resolution =  <4>;
+		focaltech,interpolation-ctrl;
+		mmi,usb-charger-detection;
+		mmi,enable-gestures;
+		mmi,supported_gesture_type = <0x06>;
+    };
+};
+
+&soc {
+	mmi_stow {
+		compatible = "moto,mmi_stow";
+		mmi,stow-gpio = <&tlmm 56 0x0>;
+	};
+
+};

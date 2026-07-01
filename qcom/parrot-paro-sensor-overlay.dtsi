@@ -1,0 +1,296 @@
+/*
+ * Copyright (c) 2022, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&tlmm {
+	sar_int_default: sar_int_default {
+			mux {
+				pins = "gpio47";
+				function =  "gpio";
+			};
+			config {
+				pins = "gpio47";
+				num-grp-pins = <1>;
+				drive-strength = <2>;
+				bias-pull-up;
+			};
+	};
+
+	sar_int_sleep: sar_int_sleep {
+			mux {
+				pins = "gpio47";
+				function =  "gpio";
+			};
+			config {
+				pins = "gpio47";
+				num-grp-pins = <1>;
+				drive-strength = <2>;
+				bias-pull-up;
+			};
+	};
+};
+
+&L8E{
+	regulator-always-on;
+	status = "okay";
+};
+
+&qupv3_se6_i2c {
+	status = "ok";
+	sx937x@2c { /* SAR sensor */
+		compatible = "Semtech,sx937x";
+		reg = <0x2c>;
+		Semtech,power-supply-type = <1>;
+		//cap_vdd-supply = <&pm7550_l7>;
+		pinctrl-names = "default","sleep";
+		pinctrl-0 = <&sar_int_default>;
+		pinctrl-1 = <&sar_int_sleep>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <47 0x02>;
+		interrupt-names = "capsense0_irq";
+		Semtech,nirq-gpio= <&tlmm 47 0x02>;
+		esd-reinit-on = <1>;
+		/*use PH4/5/6 as the reference sensor
+		set it to 0xff if the ref-phases-x is not used*/
+		Semtech,ref-phases-a = <5>;
+		Semtech,ref-phases-b = <6>;
+		Semtech,ref-phases-c = <0xff>;
+		Semtech,button-flag = <0x1f>;
+		Semtech,reg-num = <59>;
+		Semtech,reg-init = <
+			0x8024 0x00007F00
+			0x4004 0x00000074
+			0x4008 0x00000008
+			0x8020 0x00000032
+			0x8028 0x00000896
+			0x8034 0x00000896
+			0x8040 0x00000896
+			0x804C 0x00000896
+			0x8058 0x00000876
+			0x8064 0x0000089E
+			0x8070 0x0000089E
+			0x807C 0x0000085E
+			0x8030 0x00924964
+			0x803C 0x00B24924
+			0x8048 0x0092C924
+			0x8054 0x00924925
+			0x8060 0x0092492C
+			0x806C 0x00925924
+			0x8078 0x00964924
+			0x8084 0x00FFF9FF
+			0x8098 0x00002828
+			0x80B8 0x00006E4B
+			0x80D8 0x00004B4B
+			0x80F8 0x00006243
+			0x8118 0x00002020
+			0x8138 0x000000FF
+			0x8158 0x000000FF
+			0x8178 0x000000FF
+			0x80A0 0x22220001
+			0x80C0 0x23230001
+			0x80E0 0x34340002
+			0x8100 0x33330002
+			0x8120 0x57570002
+			0x8188 0x08000015
+			0x818C 0x08000016
+			0x8090 0x50B85000
+			0x80B0 0x10005000
+			0x80D0 0x10005000
+			0x80F0 0x10005000
+			0x8110 0x28DC5000
+			0x8130 0x00005000
+			0x8150 0x00005000
+			0x8170 0x00005000
+			0x8088 0x00300000
+			0x80A8 0x00300000
+			0x80C8 0x00300000
+			0x80E8 0x00300000
+			0x8108 0x00300000
+			0x8128 0x06300000
+			0x8148 0x06300000
+			0x8168 0x06300000
+			0x808C 0x60200030
+			0x80AC 0x60200064
+			0x80CC 0x60200050
+			0x80EC 0x60200050
+			0x810C 0x60200030
+			0x812C 0x60200030
+			0x814C 0x60200030
+			0x816C 0x60200030
+		>;
+
+		status = "okay";
+	};
+
+	stk501xx@28 { /* SAR sensor */
+		compatible = "stk,stk501xx";
+		reg = <0x28>;
+		//pinctrl-names = "default","sleep";
+		//pinctrl-0 = <&sar_int_default>;
+		//pinctrl-1 = <&sar_int_sleep>;
+		stk,direction = "in";
+		interrupt-parent = <&tlmm>;
+		interrupts = <47 0x02>;
+		interrupt-names = "capsense1_irq";
+		stk501xx,irq-gpio = <&tlmm 47 0x02>;
+                stk,mapping_phase = <2 1 4 5 6 0 3 7>;
+                stk,sar_thd0 = <260000 20000 5000 260000 10000 14000 2000 260000>;
+                stk,sar_thd1 = <260000 10000 260000 260000 260000 8000 260000 260000>;
+                stk,coef_t = <128 128 132 131 133 130 128 128 188 205 136 156 201 228 128 128>;
+                stk,tc_config = <500000 0 1 64000 3 4 80000 4 5>;
+                stk,reg-num = <140>;
+                stk,reg-init = <
+                    0x104 0x0
+                    0x100 0xf
+                    0xa00 0xa
+                    0x10 0xa5
+                    0x768 0x110010
+                    0x76c 0x1000
+                    0x740 0x413aa
+                    0x744 0x505000f
+                    0x748 0x505
+                    0x74c 0x30200
+                    0x750 0xe0e001d
+                    0x754 0xe0e
+                    0x758 0x30200
+                    0x75c 0x1d1d002f
+                    0x760 0x10001d1d
+                    0x764 0x30200
+                    0x58 0x22242222
+                    0x5c 0x22222422
+                    0x60 0x24222222
+                    0x64 0x0
+                    0x68 0x22222224
+                    0x6c 0x22224222
+                    0x70 0x22222242
+                    0x74 0x22422222
+                    0xd0 0x00000960
+                    0xd4 0x40ff
+                    0x200 0x0
+                    0x240 0x0
+                    0x280 0x0
+                    0x2c0 0x0
+                    0x300 0x0
+                    0x340 0x0
+                    0x380 0x0
+                    0x3c0 0x0
+                    0x208 0x05001210
+                    0x248 0x7001210
+                    0x288 0x07001204
+                    0x2c8 0x05001204
+                    0x308 0x7001211
+                    0x348 0x7001210
+                    0x388 0x07001204
+                    0x3c8 0x7000e0e
+                    0x20c 0x10005003
+                    0x24c 0x10005003
+                    0x28c 0x00005003
+                    0x2cc 0x00005003
+                    0x30c 0x10005003
+                    0x34c 0x10005003
+                    0x38c 0x00005003
+                    0x3cc 0x10004003
+                    0x210 0x112
+                    0x250 0x112
+                    0x290 0x112
+                    0x2d0 0x112
+                    0x310 0x112
+                    0x350 0x112
+                    0x390 0x112
+                    0x3d0 0x111
+                    0x214 0x8008000
+                    0x254 0x7d07914
+                    0x294 0xa205414
+                    0x2d4 0x8008000
+                    0x314 0xd708e15
+                    0x354 0xb005c15
+                    0x394 0xe40be15
+                    0x3d4 0x8008000
+                    0x430 0x0
+                    0x434 0x0
+                    0x438 0x3
+                    0x43c 0x0
+                    0x440 0x0
+                    0x444 0x0
+                    0x448 0x0
+                    0x44c 0x0
+                    0x218 0x4
+                    0x258 0x4
+                    0x298 0x4
+                    0x2d8 0x4
+                    0x318 0x4
+                    0x358 0x4
+                    0x398 0x4
+                    0x3d8 0x4
+                    0x21c 0x60000
+                    0x25c 0x60000
+                    0x29c 0x60000
+                    0x2dc 0x60000
+                    0x31c 0x60000
+                    0x35c 0x60000
+                    0x39c 0x60000
+                    0x3dc 0x60000
+                    0x224 0x3fffff00
+                    0x264 0x3fffff00
+                    0x2a4 0x3fffff00
+                    0x2e4 0x3fffff00
+                    0x324 0x3fffff00
+                    0x364 0x3fffff00
+                    0x3a4 0x3fffff00
+                    0x3e4 0x3fffff00
+                    0x22c 0x32323232
+                    0x26c 0x32323232
+                    0x2ac 0x32323232
+                    0x2ec 0x32323232
+                    0x32c 0x32323232
+                    0x36c 0x32323232
+                    0x3ac 0x3232321d
+                    0x3ec 0x32323232
+                    0x230 0x7
+                    0x270 0x10007
+                    0x2b0 0x7
+                    0x2f0 0x7
+                    0x330 0x7
+                    0x370 0x10007
+                    0x3b0 0x7
+                    0x3f0 0x7
+                    0xb0 0x50000
+                    0xb4 0x10101010
+                    0xb8 0x10101010
+                    0x400 0x0
+                    0x404 0x0
+                    0x408 0x0
+                    0x134 0x3ff03a0
+                    0x480 0x11111111
+                    0x484 0x38000
+                    0x488 0x51515151
+                    0x48c 0x38000
+                    0x490 0x0
+                    0x494 0x0
+                    0x498 0x0
+                    0x49c 0x0
+                    0xa00 0xa
+                    0x10 0xa5
+                    0x120 0x0
+                    0x740 0x413aa
+                    0x10 0x5a
+                    0xa00 0x5
+                    0x148 0x8003f00
+                    0x4 0x4206e
+                    0x1100 0x15
+                    0x400 0x1403311
+                    0x404 0x1403341
+		>;
+
+		status = "okay";
+	};
+};
