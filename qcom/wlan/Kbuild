@@ -187,6 +187,30 @@ ifeq ($(TARGET_SUPPORT),sa510m)
 dtbo-y += sa510m-cnss.dtbo
 endif
 
+ifeq ($(CONFIG_MONA_DTB),y)
+dtbo-y += parrot-mona-wcn6755.dtbo
+endif
+
+ifeq ($(CONFIG_MONAI_DTB),y)
+dtbo-y += parrot-monai-wcn6755.dtbo
+endif
+
+ifeq ($(CONFIG_PORTOV_DTB),y)
+dtbo-y += parrot-portov-wcn3990.dtbo
+endif
+
+ifeq ($(CONFIG_MUMBA_DTB),y)
+dtbo-y += parrot-mumba-wcn3990.dtbo
+endif
+
+ifeq ($(CONFIG_CUSCO_DTB),y)
+dtbo-y += parrot-cuscoi-wcn3990.dtbo
+endif
+
+ifeq ($(CONFIG_LAMY_DTB),y)
+dtbo-y += parrot-lamy-wcn6755.dtbo
+endif
+
 always-y	:= $(dtb-y) $(dtbo-y)
 subdir-y	:= $(dts-dirs)
 clean-files	:= *.dtb *.dtbo
