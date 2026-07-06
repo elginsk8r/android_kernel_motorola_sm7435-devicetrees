@@ -1,0 +1,8 @@
+//FM changes
+/delete-node/ &fm_rtc6226;
+
+&qupv3_se11_default_tx {
+	config {
+		output-high;
+	};
+};
