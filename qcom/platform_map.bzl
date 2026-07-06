@@ -1,3 +1,5 @@
+load("//msm-kernel:moto_product.bzl", "mmi_product_name")
+
 _platform_map = {
     "sdxkova": {
         "dtb_list": [
@@ -525,74 +527,26 @@ _platform_map = {
     "parrot": {
         "dtb_list": [
             # keep sorted
-            {"name": "parrot.dtb"},
-            {"name": "parrotp.dtb"},
-            {"name": "parrot-sg.dtb"},
-            {"name": "parrotp-sg.dtb"},
-            {"name": "parrot-4gb.dtb"},
-            {"name": "parrot-lite.dtb"},
-            {"name": "ravelin.dtb"},
-            {"name": "ravelinp.dtb"},
-            {"name": "ravelin-4gb.dtb"},
-            {"name": "ravelinp-4gb.dtb"},
-            {"name": "ravelin-sg.dtb"},
-            {"name": "ravelinp-sg.dtb"},
-            {"name": "montague-cqm-fp1.dtb"},
-            {"name": "montague-cqs-fp1.dtb"},
-            {"name": "montague-cqm-fp2.dtb"},
-            {"name": "montague-cqs-fp2.dtb"},
-            {"name": "montague-cqm-fp3.dtb"},
-            {"name": "montague-cqs-fp3.dtb"},
-            {"name": "montague.dtb"},
-            {"name": "montaguep.dtb"},
-            {"name": "montague-qmb.dtb"},
-            {"name": "montague-4gb.dtb"},
-            {"name": "montaguep-4gb.dtb"},
+            {"name": "parrot-moto-base.dtb", "product":"paros",},
+            {"name": "parrot-moto-base.dtb", "product":"mona",},
+            {"name": "parrot-moto-base.dtb", "product":"paro",},
+            {"name": "parrot-moto-base.dtb", "product":"monai",},
+            {"name": "parrot-moto-base.dtb", "product":"portov",},
+            {"name": "parrot-moto-base.dtb", "product":"mumba",},
+            {"name": "parrot-moto-base.dtb", "product":"lamy",},
         ],
         "dtbo_list": [
             # keep sorted
-            {"name": "parrot-rumi-overlay.dtbo"},
-            {"name": "parrot-atp-overlay.dtbo"},
-            {"name": "parrot-idp-overlay.dtbo"},
-            {"name": "parrot-idp-wcn3990-overlay.dtbo"},
-            {"name": "parrot-idp-wcn3990-amoled-rcm-overlay.dtbo"},
-            {"name": "parrot-idp-wcn6750-amoled-rcm-overlay.dtbo"},
-            {"name": "parrot-idp-wcn6750-amoled-overlay.dtbo"},
-            {"name": "parrot-idp-nopmi-overlay.dtbo"},
-            {"name": "parrot-idp-pm8350b-overlay.dtbo"},
-            {"name": "parrot-qrd-overlay.dtbo"},
-            {"name": "parrot-qrd-wcn6750-overlay.dtbo"},
-            {"name": "parrot-qrd-nopmi-overlay.dtbo"},
-            {"name": "parrot-qrd-pm8350b-overlay.dtbo"},
-            {"name": "parrot-idp-4gb-overlay.dtbo"},
-            {"name": "parrot-idp-wcn3990-4gb-overlay.dtbo"},
-            {"name": "parrot-idp-wcn3990-amoled-rcm-4gb-overlay.dtbo"},
-            {"name": "parrot-idp-wcn6750-amoled-rcm-4gb-overlay.dtbo"},
-            {"name": "parrot-idp-wcn6750-amoled-4gb-overlay.dtbo"},
-            {"name": "parrot-qrd-4gb-overlay.dtbo"},
-            {"name": "parrot-qrd-wcn6750-4gb-overlay.dtbo"},
-            {"name": "parrot-idp-wcn6755-amoled-rcm-overlay.dtbo"},
-            {"name": "parrot-idp-wcn6755-overlay.dtbo"},
-            {"name": "parrot-qrd-wcn6755-overlay.dtbo"},
-            {"name": "parrot-idp-wcn6755-pm8350b-overlay.dtbo"},
-            {"name": "parrot-idp-wcn6755-nopmi-overlay.dtbo"},
-            {"name": "ravelin-rumi-overlay.dtbo"},
-            {"name": "ravelin-atp-overlay.dtbo"},
-            {"name": "ravelin-idp-overlay.dtbo"},
-            {"name": "ravelin-idp-wcn3950-amoled-rcm-overlay.dtbo"},
-            {"name": "ravelin-qrd-overlay.dtbo"},
-            {"name": "ravelin-idp-wcn3988-4gb-overlay.dtbo"},
-            {"name": "ravelin-qrd-4gb-overlay.dtbo"},
-            {"name": "montague-rumi-overlay.dtbo"},
-            {"name": "montague-hsp-overlay.dtbo"},
-            {"name": "montague-rcm-overlay.dtbo"},
-            {"name": "montague-wsa-overlay.dtbo"},
-            {"name": "montague-wsd-overlay.dtbo"},
-            {"name": "montague-idp-qps615-overlay.dtbo"},
-            {"name": "montague-adrastea-overlay.dtbo"},
-            {"name": "montague-apache-overlay.dtbo"},
-            {"name": "montague-moselle-overlay.dtbo"},
-        ],
+            {"name": "parrot-paros-evt-overlay.dtbo", "product": "paros",},
+            {"name": "parrot-mona-evb-overlay.dtbo", "product": "mona",},
+            {"name": "parrot-paro-evb-overlay.dtbo", "product": "paro",},
+            {"name": "parrot-monai-dvt1-overlay.dtbo", "product": "monai",},
+            {"name": "parrot-portov-evb-overlay.dtbo", "product": "portov",},
+            {"name": "parrot-portov-dvt1-overlay.dtbo", "product": "portov",},
+            {"name": "parrot-mumba-evb-overlay.dtbo", "product": "mumba",},
+            {"name": "parrot-mumba-5200ma-evb-overlay.dtbo", "product": "mumba",},
+            {"name": "parrot-lamy-evb-overlay.dtbo", "product": "lamy",},
+	],
     },
 }
 
@@ -604,11 +558,18 @@ def _get_dtb_lists(target, dt_overlay_supported):
         "dtb_list": [],
         "dtbo_list": [],
     }
-
+    product = mmi_product_name
     for dtb_node in [target] + _platform_map[target].get("binary_compatible_with", []):
-        ret["dtb_list"].extend(_platform_map[dtb_node].get("dtb_list", []))
+        for dtb in _platform_map[dtb_node].get("dtb_list", []):
+            if (dtb.get("product","default") == product) or (dtb.get("product","default") == "default") :
+                # print("target:{} product:{} append dtb_list name {}".format(target, product, dtb.get("name")))
+                ret["dtb_list"].append({"name": "{}".format(dtb.get("name"))})
+
         if dt_overlay_supported:
-            ret["dtbo_list"].extend(_platform_map[dtb_node].get("dtbo_list", []))
+            for dtbo in _platform_map[dtb_node].get("dtbo_list", []):
+                if (dtbo.get("product","default") == product) or (dtbo.get("product","default") == "default") :
+                    # print("target:{} product:{} append dtbo_list name {}".format(target, product, dtbo.get("name")))
+                    ret["dtbo_list"].append({"name": "{}".format(dtbo.get("name"))})
         else:
             # Translate the dtbo list into dtbs we can append to main dtb_list
             for dtb in _platform_map[dtb_node].get("dtb_list", []):

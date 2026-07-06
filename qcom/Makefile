@@ -209,6 +209,48 @@ pineapple-dtb-$(CONFIG_ARCH_PINEAPPLE) += \
 pineapple-overlays-dtb-$(CONFIG_ARCH_PINEAPPLE) += $(PINEAPPLE_BOARDS) $(NOAPQ_PINEAPPLE_BOARDS) $(PINEAPPLE_BASE_DTB) $(PINEAPPLE_APQ_BASE_DTB)
 dtb-y += $(pineapple-dtb-y)
 
+ifeq ($(CONFIG_MMI_DEVICE_DTBS),y)
+ifeq ($(CONFIG_PAROS_DTB),y)
+PARROT_BASE_DTB += parrot-moto-base.dtb
+PARROT_BOARDS += parrot-paros-evt-overlay.dtbo
+endif
+
+ifeq ($(CONFIG_MONA_DTB),y)
+PARROT_BASE_DTB += parrot-moto-base.dtb
+PARROT_BOARDS += parrot-mona-evb-overlay.dtbo
+endif
+
+ifeq ($(CONFIG_LAMY_DTB),y)
+PARROT_BASE_DTB += parrot-moto-base.dtb
+PARROT_BOARDS += parrot-lamy-evb-overlay.dtbo
+endif
+
+ifeq ($(CONFIG_MONAI_DTB),y)
+PARROT_BASE_DTB += parrot-moto-base.dtb
+PARROT_BOARDS += parrot-monai-dvt1-overlay.dtbo
+endif
+
+ifeq ($(CONFIG_PORTOV_DTB),y)
+PARROT_BASE_DTB += parrot-moto-base.dtb
+PARROT_BOARDS += parrot-portov-evb-overlay.dtbo
+PARROT_BOARDS += parrot-portov-dvt1-overlay.dtbo
+endif
+
+ifeq ($(CONFIG_MUMBA_DTB),y)
+PARROT_BASE_DTB += parrot-moto-base.dtb
+PARROT_BOARDS += parrot-mumba-evb-overlay.dtbo
+PARROT_BOARDS += parrot-mumba-5200ma-evb-overlay.dtbo
+endif
+
+ifeq ($(CONFIG_PARO_DTB),y)
+PARROT_BASE_DTB += parrot-moto-base.dtb
+PARROT_BOARDS += parrot-paro-evb-overlay.dtbo
+endif
+
+parrot-dtb-$(CONFIG_ARCH_PARROT) += \
+	$(call add-overlays, $(PARROT_BOARDS),$(PARROT_BASE_DTB))
+
+else
 PARROT_BASE_DTB += parrot.dtb parrotp.dtb parrot-sg.dtb parrotp-sg.dtb parrot-lite.dtb
 PARROT_4GB_BASE_DTB += parrot-4gb.dtb
 
@@ -246,6 +288,7 @@ parrot-dtb-$(CONFIG_ARCH_PARROT) += \
 	$(call add-overlays, $(PARROT_BOARDS),$(PARROT_BASE_DTB)) \
 	$(call add-overlays, $(PARROT_4GB_BOARDS),$(PARROT_4GB_BASE_DTB))
 parrot-overlays-dtb-$(CONFIG_ARCH_PARROT) += $(PARROT_BOARDS) $(PARROT_BASE_DTB) $(PARROT_4GB_BOARDS) $(PARROT_4GB_BASE_DTB)
+endif
 dtb-y += $(parrot-dtb-y)
 
 RAVELIN_BASE_DTB += ravelin.dtb ravelinp.dtb ravelin-sg.dtb ravelinp-sg.dtb montague.dtb montaguep.dtb montague-qmb.dtb montague-cqm-fp1.dtb montague-cqm-fp2.dtb montague-cqm-fp3.dtb montague-cqs-fp1.dtb montague-cqs-fp2.dtb montague-cqs-fp3.dtb
